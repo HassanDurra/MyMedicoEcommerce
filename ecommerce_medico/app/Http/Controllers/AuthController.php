@@ -59,7 +59,7 @@ class AuthController extends Controller
             if($request->hasFile('image')){
                 $image = time().'.'.$request->file('image')->getClientOriginalExtension();
                 $request->file('image')->move('UserImages/' , $image);
-                $image = asset('UserImages/'. $image );
+
             }
             $RegisterUser = $this->parentModel::create([
                 'image'    => $image ,
@@ -80,6 +80,12 @@ class AuthController extends Controller
                     $message->from($emailData['from']);
                     $message->subject($emailData['subject']);
                 });
+                $route = Route('admin.dashboard');
+                $storeNotification = \App\Models\Notification::create([
+                    'title'=> "User Registeration",
+                    'subject' => $RegisterUser->name .":". " " . 'Has completed Registeration',
+                    'route' => $route,
+                ]);
                 if($role == "1"){
                     return redirect(route('admin.login.view'))->with('success' , 'Registeration SuccessFull ..! Please Verify your email check your inbox.');
                 }

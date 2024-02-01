@@ -30,7 +30,6 @@ class BrandsController extends Controller
         if($request->hasFile('image')){
             $data['image'] = time().'.'.$request->file('image')->getClientOriginalExtension();
             $request->file("image")->move('Admin/Brands/' , $data['image']);
-            $data['image'] = asset('Admin/Brands/' . $data['image']);
         }
         $storeData  = $this->parentModel::create($data);
         if($storeData){
@@ -42,18 +41,16 @@ class BrandsController extends Controller
     }
     public function update(Request $request , $id = null){
         $data            = $request->except('_token');
-        // $brands          = $this->parentModel::where('id' , $id)->first();
+        $brand          = $this->parentModel::where('id' , $id)->first();
         $updateBrand     = $this->parentModel::where("id" , $id)->update($data);
         if($request->hasFile('image')){
-            // $unlinkImage   = $brands->image;
-            // dd($unlinkImage);
-            // if(file_exists($unlinkImage)){
-
-            //     unlink($unlinkImage);
-            // }
+            $unlinkImage   =     public_path('Admin/Brands/' . $brand->image);
+            if(file_exists($unlinkImage)){
+                unlink($unlinkImage);
+            }
             $data['image'] = time().'.'.$request->file('image')->getClientOriginalExtension();
             $request->file("image")->move('Admin/Brands/' , $data['image']);
-            $data['image'] = asset('Admin/Brands/' . $data['image']);
+
             $updateBrand   = $this->parentModel::where('id' , $id)->update($data);
         }
         if($updateBrand){

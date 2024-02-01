@@ -22,7 +22,7 @@ All Brands
                     @foreach ($data['brand'] as $brand)
                         <tr>
                         <td><strong>{{ $loop->iteration }}</strong></td>
-                        <td><img src="{{ $brand->image }}" style="width: 50px; height:50px; object-fit:contain;" alt=""></td>
+                        <td><img src="{{ asset('Admin/Brands/' . $brand->image) }}" style="width: 50px; height:50px; object-fit:contain;" alt=""></td>
                         <td>{{ $brand->name }}</td>
                         <td>
                         <div class="dropdown">

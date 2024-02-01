@@ -614,7 +614,9 @@
 									<span class="badge light text-white bg-primary rounded-circle">76</span>
 								</a>
 							</li>
-							<li class="nav-item dropdown notification_dropdown">
+
+                            {{-- // Notification --}}
+                            <li class="nav-item dropdown notification_dropdown">
 								<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
 									<svg xmlns="http://www.w3.org/2000/svg" width="19.375" height="24" viewBox="0 0 19.375 24">
 									  <g id="_006-notification" data-name="006-notification" transform="translate(-341.252 -61.547)">
@@ -622,82 +624,21 @@
 									  </g>
 									</svg>
 
-									<span class="badge light text-white bg-primary rounded-circle">4</span>
+									<span class="badge light text-white bg-primary rounded-circle" id="notificationCount">0</span>
 								</a>
 								<div class="dropdown-menu dropdown-menu-end">
 									<div id="DZ_W_Notification1" class="widget-media dlab-scroll p-3" style="height:380px;">
-										<ul class="timeline">
-											<li>
-												<div class="timeline-panel">
-													<div class="media me-2">
-														<img alt="image" width="50" src="images/avatar/1.jpg">
-													</div>
-													<div class="media-body">
-														<h6 class="mb-1">Dr sultads Send you Photo</h6>
-														<small class="d-block">29 July 2020 - 02:26 PM</small>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="timeline-panel">
-													<div class="media me-2 media-info">
-														KG
-													</div>
-													<div class="media-body">
-														<h6 class="mb-1">Resport created successfully</h6>
-														<small class="d-block">29 July 2020 - 02:26 PM</small>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="timeline-panel">
-													<div class="media me-2 media-success">
-														<i class="fa fa-home"></i>
-													</div>
-													<div class="media-body">
-														<h6 class="mb-1">Reminder : Treatment Time!</h6>
-														<small class="d-block">29 July 2020 - 02:26 PM</small>
-													</div>
-												</div>
-											</li>
-											 <li>
-												<div class="timeline-panel">
-													<div class="media me-2">
-														<img alt="image" width="50" src="images/avatar/1.jpg">
-													</div>
-													<div class="media-body">
-														<h6 class="mb-1">Dr sultads Send you Photo</h6>
-														<small class="d-block">29 July 2020 - 02:26 PM</small>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="timeline-panel">
-													<div class="media me-2 media-danger">
-														KG
-													</div>
-													<div class="media-body">
-														<h6 class="mb-1">Resport created successfully</h6>
-														<small class="d-block">29 July 2020 - 02:26 PM</small>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="timeline-panel">
-													<div class="media me-2 media-primary">
-														<i class="fa fa-home"></i>
-													</div>
-													<div class="media-body">
-														<h6 class="mb-1">Reminder : Treatment Time!</h6>
-														<small class="d-block">29 July 2020 - 02:26 PM</small>
-													</div>
-												</div>
-											</li>
+										<ul class="timeline" id="notificationBody">
+									    	{{-- Notification Section --}}
+
+                                            {{-- /// --}}
+
 										</ul>
 									</div>
 									<a class="all-notification" href="javascript:void(0);">See all notifications <i class="ti-arrow-end"></i></a>
 								</div>
 							</li>
+                            {{-- Notification --}}
 							<li class="nav-item dropdown notification_dropdown">
 								<a class="nav-link " href="javascript:void(0);" data-bs-toggle="dropdown">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="21.6" viewBox="0 0 24 21.6">
@@ -819,6 +760,39 @@
 							<li><a href="{{ route('brands.create') }}">Create</a></li>
 							<li><a href="{{ route('brands.index') }}">All</a></li>
 							<li><a href="{{ route('brands.trash') }}">Trash</a></li>
+						</ul>
+
+					</li>
+					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-025-dashboard"></i>
+							<span class="nav-text">Category</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="{{ route('category.create') }}">Create</a></li>
+							<li><a href="{{ route('category.index') }}">All</a></li>
+							<li><a href="{{ route('category.trash') }}">Trash</a></li>
+						</ul>
+
+					</li>
+					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-025-dashboard"></i>
+							<span class="nav-text">Sub Category</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="{{ route('subcategory.create') }}">Create</a></li>
+							<li><a href="{{ route('subcategory.index') }}">All</a></li>
+							<li><a href="{{ route('subcategory.trash') }}">Trash</a></li>
+						</ul>
+
+					</li>
+					<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-025-dashboard"></i>
+							<span class="nav-text">Products</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="{{ route('product.create') }}">Create</a></li>
+							<li><a href="{{ route('product.index') }}">All</a></li>
+							<li><a href="{{ route('product.trash') }}">Trash</a></li>
 						</ul>
 
 					</li>
@@ -990,7 +964,43 @@
 			$(".booking-calender .fa.fa-clock-o").addClass('fa-clock');
 		});
 	</script>
+    <script>
+        let notificationRoute  = "{{ route('admin.notification') }}";
+        let notificationBody   = $("#notificationBody");
+        let notificationDelete = "{{ route('delete.notification') }}";
+        $(document).ready(function(){
 
+            setInterval(() => {
+                $.ajax({
+                    url: notificationRoute,
+                    type:'Get',
+                    success:function(response){
+                    $("#notificationCount").html(response.length);
+                    let notificationData = "";
+
+                    $(response).each(function(index , value){
+                        let deleteUrl = notificationDelete + "/" + value.id;
+                        notificationData +=`
+                        <li>
+                          <a href="${deleteUrl}">
+                            <div class="timeline-panel">
+                            <div class="media me-2">
+                            <img alt="image" width="50" src="images/avatar/1.jpg">
+                            </div>
+                            <div class="media-body">
+                            <h6 class="mb-1">${value.title}</h6>
+                            <small class="d-block">${value.subject}</small>
+                            </div>
+                            </div>
+                          </a>
+                        </li>`;
+                    });
+                    $(notificationBody).html(notificationData);
+                    }
+                })
+            }, 2000);
+        })
+    </script>
 </body>
 
 <!-- Mirrored from travl.dexignlab.com/xhtml/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 10 Oct 2023 21:59:22 GMT -->
