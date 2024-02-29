@@ -629,10 +629,13 @@
 								<div class="dropdown-menu dropdown-menu-end">
 									<div id="DZ_W_Notification1" class="widget-media dlab-scroll p-3" style="height:380px;">
 										<ul class="timeline" id="notificationBody">
-									    	{{-- Notification Section --}}
-
-                                            {{-- /// --}}
-
+                                            <li>
+                                                <div class="timeline-badge primary"></div>
+                                                <a class="timeline-panel text-muted" href="javascript:void(0);">
+                                                    <span>10 minutes ago</span>
+                                                    <h6 class="mb-0">Youtube, a video-sharing website, goes live <strong class="text-primary">$500</strong>.</h6>
+                                                </a>
+                                            </li>
 										</ul>
 									</div>
 									<a class="all-notification" href="javascript:void(0);">See all notifications <i class="ti-arrow-end"></i></a>
@@ -965,41 +968,41 @@
 		});
 	</script>
     <script>
-        let notificationRoute  = "{{ route('admin.notification') }}";
-        let notificationBody   = $("#notificationBody");
-        let notificationDelete = "{{ route('delete.notification') }}";
-        $(document).ready(function(){
+        // let notificationRoute  = "{{ route('admin.notification') }}";
+        // let notificationBody   = $("#notificationBody");
+        // let notificationDelete = "{{ route('delete.notification') }}";
+        // $(document).ready(function(){
 
-            setInterval(() => {
-                $.ajax({
-                    url: notificationRoute,
-                    type:'Get',
-                    success:function(response){
-                    $("#notificationCount").html(response.length);
-                    let notificationData = "";
+        //     setInterval(() => {
+        //         $.ajax({
+        //             url: notificationRoute,
+        //             type:'Get',
+        //             success:function(response){
+        //             $("#notificationCount").html(response.length);
+        //             let notificationData = "";
 
-                    $(response).each(function(index , value){
-                        let deleteUrl = notificationDelete + "/" + value.id;
-                        notificationData +=`
-                        <li>
-                          <a href="${deleteUrl}">
-                            <div class="timeline-panel">
-                            <div class="media me-2">
-                            <img alt="image" width="50" src="images/avatar/1.jpg">
-                            </div>
-                            <div class="media-body">
-                            <h6 class="mb-1">${value.title}</h6>
-                            <small class="d-block">${value.subject}</small>
-                            </div>
-                            </div>
-                          </a>
-                        </li>`;
-                    });
-                    $(notificationBody).html(notificationData);
-                    }
-                })
-            }, 2000);
-        })
+        //             $(response).each(function(index , value){
+        //                 let deleteUrl = notificationDelete + "/" + value.id;
+        //                 notificationData +=`
+        //                 <li>
+        //                   <a href="${deleteUrl}">
+        //                     <div class="timeline-panel">
+        //                     <div class="media me-2">
+        //                     <img alt="image" width="50" src="images/avatar/1.jpg">
+        //                     </div>
+        //                     <div class="media-body">
+        //                     <h6 class="mb-1">${value.title}</h6>
+        //                     <small class="d-block">${value.subject}</small>
+        //                     </div>
+        //                     </div>
+        //                   </a>
+        //                 </li>`;
+        //             });
+        //             $(notificationBody).html(notificationData);
+        //             }
+        //         })
+        //     }, 2000);
+        // })
     </script>
 </body>
 
