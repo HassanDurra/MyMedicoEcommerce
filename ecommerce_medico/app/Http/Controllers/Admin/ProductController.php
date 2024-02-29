@@ -49,7 +49,8 @@ class ProductController extends Controller
                     'subimage' => $filename
                    ]);
             }
-            return redirect()->route($this->parentRoute.'.index')->with('success' , 'Product has been Added..!');
+            // return redirect()->route($this->parentRoute.'.index')->with('success' , 'Product has been Added..!');
+            echo "success";
             }
             else{
                return redirect()->back()->with('error' , 'Failed to add Products..!');
@@ -60,45 +61,45 @@ class ProductController extends Controller
         return redirect()->back()->with('error' , 'Failed to add Image or sub Images For Products..!');
         }
     }
-    //Update Function
-    public function update($id = null , Request $request){
-        $data     = $request->except('_token');
-        $products = $this->parentModel::where("id" , $id)->first();
-        $updateProduct = $this->parentModel::where("id" , $id)->update($data);
+    // //Update Function
+    // public function update($id = null , Request $request){
+    //     $data     = $request->except('_token');
+    //     $products = $this->parentModel::where("id" , $id)->first();
+    //     $updateProduct = $this->parentModel::where("id" , $id)->update($data);
 
-        if($request->hasFile("image")){
-            $fileName = time().'.'.$request->file("image")->getClientOriginalExtension();
-            $request->file('image')->move("Admin/ProductImages/" , $fileName);
-            $data['image'] = $fileName;
-            $updateProduct = $this->parentModel::where("id" , $id)->update([
-                'image' => $data['image']
-            ]);
-            $existingImage = public_path('Admin/ProductImages/'.$products->image);
-            if(file_exists($existingImage)){
-                unlink($existingImage);
-            }
+    //     if($request->hasFile("image")){
+    //         $fileName = time().'.'.$request->file("image")->getClientOriginalExtension();
+    //         $request->file('image')->move("Admin/ProductImages/" , $fileName);
+    //         $data['image'] = $fileName;
+    //         $updateProduct = $this->parentModel::where("id" , $id)->update([
+    //             'image' => $data['image']
+    //         ]);
+    //         $existingImage = public_path('Admin/ProductImages/'.$products->image);
+    //         if(file_exists($existingImage)){
+    //             unlink($existingImage);
+    //         }
 
-        }
-        if($request->hasFile('subimage')){
-            foreach($data['subimage'] as $key => $value){
-                $filename =  time().".".$request->file('subimage')[$key]->getClientOriginalExtension();
-                $request->file('subimage')[$key]->move("Admin/ProductSubImages/" , $filename);
-                   $storeSubImage = $this->childModel::create([
-                    'product_id' => $id,
-                    'subimage' => $filename
-                   ]);
-            }
-        }
+    //     }
+    //     if($request->hasFile('subimage')){
+    //         foreach($data['subimage'] as $key => $value){
+    //             $filename =  time().".".$request->file('subimage')[$key]->getClientOriginalExtension();
+    //             $request->file('subimage')[$key]->move("Admin/ProductSubImages/" , $filename);
+    //                $storeSubImage = $this->childModel::create([
+    //                 'product_id' => $id,
+    //                 'subimage' => $filename
+    //                ]);
+    //         }
+    //     }
 
-        if($updateProduct){
-            return redirect()->route($this->parentRoute.'.index')->with('success' , 'Product has been Updated..!');
-        }
-        else{
-            return redirect()->back()->with('error' , 'Failed to Update Products..!');
+    //     if($updateProduct){
+    //         return redirect()->route($this->parentRoute.'.index')->with('success' , 'Product has been Updated..!');
+    //     }
+    //     else{
+    //         return redirect()->back()->with('error' , 'Failed to Update Products..!');
 
-        }
+    //     }
 
-    }
+    // }
     // CasCading DropDown
     public function subcategory($id = null)
     {
@@ -110,43 +111,43 @@ class ProductController extends Controller
             echo "No Data Found";
         }
     }
-    public function delete($id = null){
-        $delete        = $this->parentModel::where('id' , $id)->delete();
-        $changeStatus  = $this->parentModel::where('id' , $id)->update(['is_publised' => 0]);
+    // public function delete($id = null){
+    //     $delete        = $this->parentModel::where('id' , $id)->delete();
+    //     $changeStatus  = $this->parentModel::where('id' , $id)->update(['is_publised' => 0]);
 
-        if($delete){
-            return redirect()->route($this->parentRoute.'.index')->with('success' , 'Product Has been sent to trash..!');
-        }
-        else{
-            return redirect()->back()->with('error' , 'Failed to Delete Product..!');
-        }
-    }
-    public function restore($id = null){
-        $delete  = $this->parentModel::where('id' , $id)->restore();
-        if($delete){
-            return redirect()->route($this->parentRoute.'.index')->with('success' , 'Product Has been Restored..!');
-        }
-        else{
-            return redirect()->back()->with('error' , 'Failed to Restore Product..!');
-        }
-    }
-    public function destroy($id = null){
-        $delete  = $this->parentModel::where('id' , $id)->forceDelete();
-        if($delete){
-            return redirect()->route($this->parentRoute.'.index')->with('success' , 'Product Has been Deleted..!');
-        }
-        else{
-            return redirect()->back()->with('error' , 'Failed to Delete Product..!');
-        }
-    }
-    public function publish($id = null){
-        $delete  = $this->parentModel::where('id' , $id)->update(['is_publised' => 1]);
-        if($delete){
-            return redirect()->route($this->parentRoute.'.index')->with('success' , 'Product Has been Published..!');
-        }
-        else{
-            return redirect()->back()->with('error' , 'Failed to Publish Product..!');
-        }
-    }
+    //     if($delete){
+    //         return redirect()->route($this->parentRoute.'.index')->with('success' , 'Product Has been sent to trash..!');
+    //     }
+    //     else{
+    //         return redirect()->back()->with('error' , 'Failed to Delete Product..!');
+    //     }
+    // }
+    // public function restore($id = null){
+    //     $delete  = $this->parentModel::where('id' , $id)->restore();
+    //     if($delete){
+    //         return redirect()->route($this->parentRoute.'.index')->with('success' , 'Product Has been Restored..!');
+    //     }
+    //     else{
+    //         return redirect()->back()->with('error' , 'Failed to Restore Product..!');
+    //     }
+    // }
+    // public function destroy($id = null){
+    //     $delete  = $this->parentModel::where('id' , $id)->forceDelete();
+    //     if($delete){
+    //         return redirect()->route($this->parentRoute.'.index')->with('success' , 'Product Has been Deleted..!');
+    //     }
+    //     else{
+    //         return redirect()->back()->with('error' , 'Failed to Delete Product..!');
+    //     }
+    // }
+    // public function publish($id = null){
+    //     $delete  = $this->parentModel::where('id' , $id)->update(['is_publised' => 1]);
+    //     if($delete){
+    //         return redirect()->route($this->parentRoute.'.index')->with('success' , 'Product Has been Published..!');
+    //     }
+    //     else{
+    //         return redirect()->back()->with('error' , 'Failed to Publish Product..!');
+    //     }
+    // }
 
 }
